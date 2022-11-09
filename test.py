@@ -460,19 +460,7 @@ while i < 101:
         time.sleep(a)
     i += 1
 
-print("Model has been trained, now running through the testing.")
-print("Testing model")
-time.sleep(30)
-print("Testing completed")
-print("Calculating testing metrics")
-time.sleep(5)
-print("The Accuracy from testing is 99.96%")
-time.sleep(7)
-print("The KAPPA score is 99.36%")
-time.sleep(4)
-print("The F1-Score is 99.71")
-# choose model from all_models
-'''model=recurrent_fast.GRU([100,53],0.7) #(shape,dropout) in accordance to dataset
+model=recurrent_fast.GRU([100,53],0.7) #(shape,dropout) in accordance to dataset
 
 i=0
 with open(sys.argv[1]) as f:
@@ -490,4 +478,4 @@ with open(sys.argv[1]) as f:
                 test_X=np.delete(test_X,0,axis=0)
                 test_y=np.empty((0,1),int)
                 i=99
-                '''
+                
