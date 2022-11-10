@@ -43,7 +43,7 @@ from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import gen_cudnn_rnn_ops
 from tensorflow.python.ops import state_ops
 from tensorflow.python.platform import tf_logging as logging
-from tensorflow.python.keras import no_automatic_dependency_tracking as checkpointable
+from tensorflow.python.trackable import base as checkpointable
 from tensorflow.python.util import nest
 from tensorflow.python.util.tf_export import tf_export
 
