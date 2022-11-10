@@ -447,21 +447,7 @@ print("Please make necessary code changes as per the dataset")
 test_X=np.empty((0,53),float)
 test_y=np.empty((0,1),int)
 
-print("choosing the correct model from all_models")
-print("Starting Training")
-i = 0
-lister = [5,15,17,30,37,40,43,58,66,73,85,90,99]
-while i < 101:
-    print("{}% Trained".format(i))
-    if i == 5 or i == 15 or i == 17 or i == 30 or i == 37 or i == 40 or i == 43 or i == 58 or i == 66 or i == 73 or i == 85 or i == 90 or i == 99:
-        a = random.randint(1,3)
-        time.sleep(a)
-    else:
-        a = random.randint(0,2)
-        time.sleep(a)
-    i += 1
-
-model=recurrent_fast.GRU([100,53],0.7) #(shape,dropout) in accordance to dataset
+model=all_models.GRU([100,53],0.7) #(shape,dropout) in accordance to dataset
 
 i=0
 with open(sys.argv[1]) as f:
