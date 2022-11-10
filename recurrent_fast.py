@@ -70,7 +70,7 @@ class StackedRNNCells(Layer):
       x = keras.layers.RNN(cells)(inputs)
   ```
   """
-'''
+
   @checkpointable.no_automatic_dependency_tracking
   def __init__(self, cells, **kwargs):
     for cell in cells:
@@ -250,7 +250,7 @@ class StackedRNNCells(Layer):
       if isinstance(cell, Layer):
         updates += cell.updates
     return updates + self._updates
-'''
+
 
 @tf_export('keras.layers.RNN')
 

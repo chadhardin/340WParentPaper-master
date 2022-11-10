@@ -8,7 +8,6 @@ import scipy.cluster
 import scipy.spatial
 import os
 
-
 def medianHeuristic(data, projectionDimension, numPrototypes, W_init=None):
     '''
     This method can be used to estimate gamma for ProtoNN. An approximation to
@@ -330,7 +329,7 @@ class GraphManager:
         fileList = [x for x in fileList if x.startswith(basename)]
         assert len(fileList) > 0, 'Checkpoint file not found'
         msg = 'Too many or too few checkpoint files for globalStep: %d' % globalStep
-        assert len(fileList) is 1, msg
+        assert len(fileList) == 1, msg
         chkpt = basename + '/' + fileList[0]
         saver = tf.train.import_meta_graph(metaname)
         metaname = metaname[:-5]

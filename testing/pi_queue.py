@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_squared_error
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, BatchNormalization, Dropout, Flatten, Conv1D
+from tensorflow.python.keras.layers import Dense, Dropout, Flatten, Conv1D
 from keras.layers.normalization.batch_normalization import BatchNormalization
 from tensorflow.python.keras.callbacks import ModelCheckpoint, TensorBoard
 import keras
@@ -29,8 +29,8 @@ import sklearn.metrics as sklm
 import all_models
 print("Please make necessary code changes as per the dataset")
 # change shape if selected feature dataset is used
-#test_X=np.empty((0,53),float)
-#test_y=np.empty((0,1),int)
+test_X=np.empty((0,53),float)
+test_y=np.empty((0,1),int)
 
 window_size=sys.argv[2]
 
