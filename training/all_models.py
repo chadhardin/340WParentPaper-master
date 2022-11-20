@@ -413,3 +413,23 @@ def get_optfastrnngru(shape,dropout):
             model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
             model.summary()
         return model
+
+def get_optfastrnnlstm_single_layer(shape,dropout,first_layer_neurons):
+        model = Sequential()
+        with tf.compat.v1.variable_scope("LSTM1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
+            model.add(LSTM(first_layer_neurons,input_shape=(shape),return_sequences=True))
+            model.add(BatchNormalization())
+            model.add(Dropout(dropout))	
+            
+            
+        with tf.compat.v1.variable_scope("DENSE1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
+            model.add(Dense(first_layer_neurons, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(dropout))
+
+        with tf.compat.v1.variable_scope("DENSE2", reuse=tf.compat.v1.AUTO_REUSE) as scope:
+            model.add(Dense(1, activation='sigmoid'))
+            opt = tf.keras.optimizers.Adam(lr=1e-2, decay=1e-3)
+            model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+            model.summary()
+        return model

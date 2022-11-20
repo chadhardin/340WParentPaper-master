@@ -34,20 +34,21 @@ test_y=np.empty((0,1),int)
 model=all_models.get_fastrnnlstm([100,79],0.7) #(shape,dropout) in accordance to dataset
 
 i=0
+d=0
 with open(sys.argv[1]) as f:
     lines=f.readlines()
     for line in lines:
-        myarray = np.fromstring(line, sep=',')
-        if myarray.size!=0:
-            test_y=np.array([myarray[-1]])
-            myarray=myarray[:-1]
-            test_X=np.append(test_X,[myarray],axis=0)
-            i+=1
-            if(i==100):
-                y=model.predict(np.reshape(test_X,[1,100,79]))
-                print(y,test_y)
-                test_X=np.delete(test_X,0,axis=0)
-                test_y=np.empty((0,1),int)
-                i=99
-
-print(test_X, test_y)
+        if d < 800:
+            myarray = np.fromstring(line, sep=',')
+            if myarray.size!=0:
+                test_y=np.array([myarray[-1]])
+                myarray=myarray[:-1]
+                test_X=np.append(test_X,[myarray],axis=0)
+                i+=1
+                if(i==100):
+                    y=model.predict(np.reshape(test_X,[1,100,79]))
+                    print(y,test_y)
+                    test_X=np.delete(test_X,0,axis=0)
+                    test_y=np.empty((0,1),int)
+                    i=99
+        d+= 1
