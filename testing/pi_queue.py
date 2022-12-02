@@ -26,7 +26,7 @@ import numpy as np
 import sklearn.metrics as sklm
 import all_models
 from sklearn import preprocessing
-
+import os
 
 window_size = sys.argv[1]
 first_layer_num_neurons = int(sys.argv[2])
@@ -47,15 +47,16 @@ for i in range(train_X.shape[-1]):
     train_X[:,:,i] = np.interp(train_X[:,:,i], (train_X[:,:,i].min(), train_X[:,:,0:].max()), (-1, +1))
 print(train_X.shape, train_y.shape, test_X.shape, train_y.shape)
 
-
 model = all_models.get_optfastrnnlstm_single_layer([None, window_size, num_features], dropout = 0.6, first_layer_neurons=first_layer_num_neurons)
 
 model.fit(x = train_X,y = train_y, epochs = 10, batch_size = 100)
 
+model.save('rnnlstmadamopt.h5')
+
 model1 = all_models.get_optfastrnnlstm_single_layer1([None, window_size, num_features], dropout = 0.6, first_layer_neurons=first_layer_num_neurons)
 
 model1.fit(x = train_X,y = train_y, epochs = 10, batch_size = 100)
-
+model.save('rnnlstmdsgopt.h5')
 print("Please make necessary code changes as per the dataset")
 
 while window_index < num_windows :
