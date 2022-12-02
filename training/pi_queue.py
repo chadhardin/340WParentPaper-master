@@ -32,24 +32,18 @@ test_y=np.empty((0,1),int)
 model=all_models.get_optfastrnnlstm_single_layer([100,79],0.7, 64) #(shape,dropout) in accordance to dataset
 
 i=0
-d = 0
 with open(sys.argv[1]) as f:
     lines=f.readlines()
     for line in lines:
         myarray = np.fromstring(line, dtype=float, sep=',')
-        
-        if myarray.size!=0 and d < :
+        if myarray.size!=0:
             test_y=np.array([myarray[-1]])
             myarray=myarray[:-1]
             test_X=np.append(test_X,[myarray],axis=0)
             i+=1
             if(i==100):
-                y=model.predict(np.reshape(test_X,[1,100,79]))
+                y=model.predict(np.reshape(test_X,[1,100,53]))
                 print(y,test_y)
                 test_X=np.delete(test_X,0,axis=0)
                 test_y=np.empty((0,1),int)
                 i=99
-        d += 1
-
-print("Calculating Accuracy, Kappa, and F1-Score")
-print("Accuracy score is {}, Kappa score = {}, F1-Score = {}".format(99.96,99.36,99.71))

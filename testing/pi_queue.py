@@ -21,40 +21,42 @@ from keras.initializers import glorot_uniform
 import tensorflow as tf
 import pandas as pd
 import sys
- 
- 
-
+import math
 import numpy as np
 import sklearn.metrics as sklm
 import all_models
-print("Please make necessary code changes as per the dataset")
-# change shape if selected feature dataset is used
-test_X=np.empty((0,53),float)
-test_y=np.empty((0,1),int)
+from sklearn import preprocessing
 
-window_size=sys.argv[2]
 
-test_X=np.load("../SEL_TESTING_X_"+window_size+".npy")
-test_y=np.load("../SEL_TESTING_Y_"+window_size+".npy")
+window_size = sys.argv[1]
+first_layer_num_neurons = int(sys.argv[2])
+train_X = np.empty((0,157918), float)
+train_y = np.empty((0,1), int)
 
+train_X=np.load("./TRAINING_X_"+window_size+".npy")
+train_y=np.load("./TRAINING_Y_"+window_size+".npy")
+test_X=np.load("./TESTING_X_"+window_size+".npy")
+test_y=np.load("./TESTING_Y_"+window_size+".npy")
+train_y = np.asarray(train_y).astype('float32').reshape((-1,1))
 window_index=0
-num_windows=np.size(test_X,0)
-window_size=np.size(test_X,1)
-num_features=np.size(test_X,2)
+num_windows=np.size(train_X,0)
+window_size=np.size(train_X,1)
+num_features=np.size(train_X,2)
+test_X = test_X[:-21,:,:]
+for i in range(train_X.shape[-1]):
+    train_X[:,:,i] = np.interp(train_X[:,:,i], (train_X[:,:,i].min(), train_X[:,:,0:].max()), (-1, +1))
+print(train_X.shape, train_y.shape, test_X.shape, train_y.shape)
 
-first_layer_num_neurons=int(sys.argv[3])
-if (len(sys.argv)) > 4 :
-    if sys.argv[4] != 'grnn':
-        second_layer_num_neurons=int(sys.argv[4])
-        # choose model from all_models
-        model=all_models.get_optfastrnnlstm([window_size,num_features],0.1,first_layer_num_neurons,second_layer_num_neurons) #(shape,dropout) in accordance to dataset
-    else:
-        model=all_models.get_optfastgrnnlstm_single_layer([window_size,num_features],0.1,first_layer_num_neurons) #(shape,dropout) in accordance to dataset
 
-else  :
-    model=all_models.get_optfastrnnlstm_single_layer([window_size,num_features],0.1,first_layer_num_neurons) #(shape,dropout) in accordance to dataset
+model = all_models.get_optfastrnnlstm_single_layer([None, window_size, num_features], dropout = 0.6, first_layer_neurons=first_layer_num_neurons)
 
-model.load_weights(sys.argv[1])
+model.fit(x = train_X,y = train_y, epochs = 10, batch_size = 100)
+
+model1 = all_models.get_optfastrnnlstm_single_layer1([None, window_size, num_features], dropout = 0.6, first_layer_neurons=first_layer_num_neurons)
+
+model1.fit(x = train_X,y = train_y, epochs = 10, batch_size = 100)
+
+print("Please make necessary code changes as per the dataset")
 
 while window_index < num_windows :
     test_x = test_X[window_index:window_index+1,:,:]
@@ -62,3 +64,11 @@ while window_index < num_windows :
     window_index=window_index+1
     print("SAMPLE #:", window_index)
 
+while window_index < num_windows :
+    test_x = test_X[window_index:window_index+1,:,:]
+    y1=model1.predict(test_x)
+    window_index=window_index+1
+    print("SAMPLE #:", window_index)
+
+print(y)
+print(y1)

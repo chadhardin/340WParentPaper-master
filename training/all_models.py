@@ -418,13 +418,13 @@ def get_optfastrnnlstm_single_layer(shape,dropout,first_layer_neurons):
         model = Sequential()
         with tf.compat.v1.variable_scope("LSTM1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
             model.add(LSTM(first_layer_neurons,input_shape=(shape),return_sequences=True))
-            model.add(BatchNormalization())
+            #model.add(BatchNormalization())
             model.add(Dropout(dropout))	
             
             
         with tf.compat.v1.variable_scope("DENSE1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
             model.add(Dense(first_layer_neurons, activation='relu'))
-            model.add(BatchNormalization())
+            #model.add(BatchNormalization())
             model.add(Dropout(dropout))
 
         with tf.compat.v1.variable_scope("DENSE2", reuse=tf.compat.v1.AUTO_REUSE) as scope:

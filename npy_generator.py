@@ -29,6 +29,7 @@ import sklearn.metrics as sklm
 # convert series to supervised learning
 timestep=int(sys.argv[1])
 # load dataset
+print(1)
 dataset = pd.read_csv('training.csv', header=0)
 dataset=dataset.dropna()
 dataset=dataset.fillna(method="ffill")
@@ -38,11 +39,15 @@ orgshape=dataset.shape[1]
 columns = [dataset.shift(i) for i in range(timestep,0,-1)]
 dataset = pd.concat(columns, axis=1)
 values = dataset.values.reshape(dataset.shape[0],timestep,orgshape)
-
+print(2)
+print(range(timestep))
+timer = 0
 for i in range(timestep):
+	print("timer is at {}".format(timer))
 	values=np.delete(values,0,axis=0)
 	train_y=np.delete(train_y,0,axis=0)
-
+	timer +=1
+print(3)
 
 # split into train and test sets
 
@@ -50,7 +55,7 @@ train = values[:, :,:]
 # split into input and outputs
 train_X=train[:,:,:-1]
 
-
+print(4)
 dataset = pd.read_csv('testing.csv', header=0)
 dataset=dataset.dropna()
 dataset=dataset.fillna(method="ffill")
@@ -59,9 +64,14 @@ test_y=dataset.values[:,-1]
 columns = [dataset.shift(i) for i in range(timestep,0,-1)]
 dataset = pd.concat(columns, axis=1)
 values = dataset.values.reshape(dataset.shape[0],timestep,orgshape)
+print(5)
+print(range(timestep))
+timer = 0
 for i in range(timestep):
+	print("timer is at {}".format(timer))
 	values=np.delete(values,0,axis=0)
 	test_y=np.delete(test_y,0,axis=0)
+	timer += 1
 # integer encode direction
 
 test = values[:, :,:]
@@ -71,7 +81,7 @@ test = values[:, :,:]
 
 test_X=test[:, :,:-1]
 # reshape input to be 3D [samples, timesteps, features]
-
+print(6)
 print (train_X.shape,train_y.shape,test_X.shape,test_y.shape)
 
 np.save("TRAINING_X_"+str(timestep)+".npy",train_X)

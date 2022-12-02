@@ -1,11 +1,12 @@
 import tensorflow as tf
 import numpy as np
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Dropout, Flatten, Conv1D
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten, Conv1D
 from keras.layers.normalization.batch_normalization import BatchNormalization
-from tensorflow.python.keras.layers import  CuDNNGRU,  CuDNNLSTM
+from keras.layers import  CuDNNGRU,  CuDNNLSTM
 from tensorflow.python.keras.layers.recurrent import LSTM,GRU
-
+from tensorflow import name_scope
 import pandas as pd
 
 def get_cudnngru(shape,dropout):
@@ -315,24 +316,48 @@ def get_optfastrnnlstm(shape,dropout,first_layer_neurons,second_layer_neurons):
 
 def get_optfastrnnlstm_single_layer(shape,dropout,first_layer_neurons):
         model = Sequential()
-        with tf.compat.v1.variable_scope("LSTM1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
-            model.add(LSTM(first_layer_neurons,input_shape=(shape),return_sequences=True, celltype="FastRNNCell"))
+        with tf.compat.v1.variable_scope("LSTM1") as scope:
+            model.add(LSTM(first_layer_neurons, input_shape = shape, return_sequences=True))
             model.add(BatchNormalization())
             model.add(Dropout(dropout))	
             
-            
-        with tf.compat.v1.variable_scope("DENSE1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:
+        with tf.compat.v1.variable_scope("DENSE1") as scope:
             model.add(Dense(first_layer_neurons, activation='relu'))
             model.add(BatchNormalization())
             model.add(Dropout(dropout))
 
-        with tf.compat.v1.variable_scope("DENSE2", reuse=tf.compat.v1.AUTO_REUSE) as scope:
+        with tf.compat.v1.variable_scope("DENSE2") as scope:
             model.add(Dense(1, activation='sigmoid'))
-            opt = tf.keras.optimizers.Adam(lr=1e-2, decay=1e-3)
-            model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+            opt = tf.keras.optimizers.Adam(learning_rate=1e-2, decay=1e-3)
+            loss = tf.keras.losses.BinaryCrossentropy()
+            model.build(shape)
+            model.compile(loss=loss, optimizer=opt, metrics=['accuracy'])
             model.summary()
+        
         return model
- 
+
+def get_optfastrnnlstm_single_layer1(shape,dropout,first_layer_neurons):
+        model = Sequential()
+        with tf.compat.v1.variable_scope("LSTM1") as scope:
+            model.add(LSTM(first_layer_neurons, input_shape = shape, return_sequences=True))
+            model.add(BatchNormalization())
+            model.add(Dropout(dropout))	
+            
+        with tf.compat.v1.variable_scope("DENSE1") as scope:
+            model.add(Dense(first_layer_neurons, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(dropout))
+
+        with tf.compat.v1.variable_scope("DENSE2") as scope:
+            model.add(Dense(1, activation='sigmoid'))
+            opt = tf.keras.optimizers.experimental.SGD(learning_rate=1e-2, weight_decay=1e-3)
+            loss = tf.keras.losses.BinaryCrossentropy()
+            model.build(shape)
+            model.compile(loss=loss, optimizer=opt, metrics=['accuracy'])
+            model.summary()
+        
+        return model
+        
 def get_fastrnngru(shape,dropout):
         model = Sequential()
         with tf.compat.v1.variable_scope("GRU1" ,reuse=tf.compat.v1.AUTO_REUSE) as scope:

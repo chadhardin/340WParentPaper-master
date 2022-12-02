@@ -23,7 +23,7 @@ from edgeml.graph.rnn import FastRNNCell, FastGRNNCell
 import uuid
 
 import numpy as np
-
+import tensorflow as tf
 from tensorflow.python.eager import context
 from tensorflow.python.eager import function
 from tensorflow.python.framework import constant_op
@@ -1958,6 +1958,7 @@ class GRU(RNN):
 
 
 @tf_export('keras.layers.LSTMCell')
+@tf.compat.v1.keras.utils.track_tf1_style_variables
 class LSTMCell(Layer):
   """Cell class for the LSTM layer.
 
@@ -2318,6 +2319,7 @@ class PeepholeLSTMCell(LSTMCell):
 
 
 @tf_export(v1=['keras.layers.LSTM'])
+@tf.compat.v1.keras.utils.track_tf1_style_variables
 class LSTM(RNN):
   """Long Short-Term Memory layer - Hochreiter 1997.
 
@@ -2619,6 +2621,7 @@ class LSTM(RNN):
 
 
 @tf_export('keras.layers.LSTM', v1=[])
+@tf.compat.v1.keras.utils.track_tf1_style_variables
 class UnifiedLSTM(LSTM):
   """Long Short-Term Memory layer - Hochreiter 1997.
 
