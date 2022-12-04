@@ -1,8 +1,8 @@
-#DS 340W Research Paper on using Edge-Detect
+# DS 340W Research Paper on using Edge-Detect
 Below is the original paper and citations for the work from the authors.
 This code was modified multiple times to get updated and working correctly.
 
-#How to run Edge-Detect
+# How to run Edge-Detect
 1) Use npy_generator.py to generate the training and testing split
 
 2) Use testing/pi_queue.py 
