@@ -10,8 +10,10 @@ This code was modified multiple times to get updated and working correctly.
   - The first value is the size of each of the windows
   - The second value is the amount of neurons are in the first two layers of the model
   - Included in this repo is the saved model that got the scores put in the paper I submitted to class
+  - After model is fitted and evaluated, the metrics will print on screen
 
-# Edge-Detect
+
+# Edge-Detect (from original authors)
 Repository for IEEE CCNC'21 paper titled "[Edge-Detect: Edge-centric Network Intrusion Detection using Deep Neural
 Network](https://edas.info/showManuscript.php?type=stamped-e&m=1570662712&ext=pdf&title=PDF+file)"
 # Citation
