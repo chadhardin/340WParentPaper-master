@@ -1,5 +1,5 @@
 # DS 340W Research Paper on using Edge-Detect
-This repository is based off the Edge-Detect research paper code. Since their publication many updates had to be done to the code. This code is working and from the testing done it has a Model.Evalute Accuracy of 94.33% using the tensorflow package. Sklearn also has functions for calculating model measurements, which resulted in an Accuracy of 82.94%, Precision of 89.95%, Recall of 93.89%, Kappa score of 79.44%, and an F1_score of 88.07. 
+This repository is based off the Edge-Detect research paper code. Since their publication, many updates had to be done to the code. This code is working and from the testing done it has a Model.Evalute Accuracy of 94.33% using the tensorflow package. Sklearn also has functions for calculating model measurements, which resulted in an Accuracy of 82.94%, Precision of 89.95%, Recall of 93.89%, Kappa score of 79.44%, and an F1_score of 88.07. 
 
 # How to run Edge-Detect
 1) Use npy_generator.py to generate the training and testing split
