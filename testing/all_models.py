@@ -282,7 +282,7 @@ def get_optfastgrnnlstm_single_layer(shape,dropout,first_layer_neurons):
 
         with tf.compat.v1.variable_scope("DENSE2", reuse=tf.compat.v1.AUTO_REUSE) as scope:
             model.add(Dense(1, activation='sigmoid'))
-            opt = tf.keras.optimizers.Adam(lr=1e-2, decay=1e-3)
+            opt = tf.keras.optimizers.Adam(learning_rate=1e-2, weight_decay=1e-3)
             model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
             model.summary()
 
@@ -328,7 +328,7 @@ def get_optfastrnnlstm_single_layer(shape,dropout,first_layer_neurons):
 
         with tf.compat.v1.variable_scope("DENSE2") as scope:
             model.add(Dense(1, activation='sigmoid'))
-            opt = tf.keras.optimizers.Adam(learning_rate=1e-2, decay=1e-3)
+            opt = tf.keras.optimizers.legacy.Adam(learning_rate=1e-2, decay=1e-3)
             loss = tf.keras.losses.BinaryCrossentropy()
             model.build(shape)
             model.compile(loss=loss, optimizer=opt, metrics=['accuracy'])
