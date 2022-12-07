@@ -12,7 +12,7 @@ This repository is based off the Edge-Detect research paper code. Since their pu
   - The first value is the size of each of the windows
   - The second value is the amount of neurons are in the first two layers of the model
   - Included in this repo is the saved model that got the scores put in the paper I submitted to class
-            - * I was issues reloading this model, each time loaded has reduced the performance in my testing
+            - * I was having issues reloading this model, each time loaded has reduced the performance in my testing
   - After model is fitted and evaluated, the metrics will print on screen
 
 
